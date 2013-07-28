@@ -15,9 +15,12 @@
 	<script src="js/vendor/jquery.js"></script>
 	<script src="js/vendor/handlebars.js"></script>
 	<script src="js/vendor/ember.js"></script>
+	<script src="js/vendor/ember-data.js"></script>
 	
 	<script src="js/app/app.js"></script>
 	<script src="js/app/router.js"></script>
+	
+	<script src="js/app/models/bookmark.js"></script>
 
 	<script src="js/app/controllers/bookmark_controller.js"></script>
 	<script src="js/app/controllers/bookmarks_controller.js"></script>
@@ -25,24 +28,31 @@
 	
 	<script src="js/app/views/alert.js"></script>
 	<script src="js/app/views/flash_list.js"></script>
+	
+	<script src="js/app/routes/bookmarks.js"></script>
 </head>
 
 <body>
 	<script type="text/x-handlebars" data-template-name="application">
 		<div class="container">
-			<nav class="top-bar">
+			<nav class="top-bar" data-options="is_hover:false">
 				<ul class="title-area">
 					<li class="name">
 						<h1>{{#linkTo "index"}}Home{{/linkTo}}</h1>
 					</li>
-					<li class="name">{{#linkTo "about"}}About{{/linkTo}}
-						<ul>
-							<li>{{#linkTo "about.team"}}Team{{/linkTo}}</li>
-						</ul>
-					</li>
-					<li class="name">{{#linkTo "contact"}}Contact{{/linkTo}}</li>
-					<li class="name">{{#linkTo "bookmarks"}}Bookmarks{{/linkTo}}</li>
 				</ul>
+					
+				<section class="top-bar-section">
+					<ul  class="left">
+						<li class="has-dropdown">{{#linkTo "about"}}About{{/linkTo}}
+							<ul class="dropdown">
+								<li>{{#linkTo "about.team"}}Team{{/linkTo}}</li>
+							</ul>
+						</li>
+						<li>{{#linkTo "contact"}}Contact{{/linkTo}}</li>
+						<li>{{#linkTo "bookmarks"}}Bookmarks{{/linkTo}}</li>
+					</ul>
+				</section>
 			</nav>
 		</div>
 		
@@ -54,6 +64,9 @@
 		</div>
 	</script>
 	
+	<script type = "text/x-handlebars" data-template-name="_alert">
+		{{view.content.message}}
+	</script>
 
 	<script type = "text/x-handlebars" data-template-name="index">
 		<h1>Welcome to Ember.js!</h1>
@@ -78,11 +91,6 @@
 		<iframe {{bindAttr src="url"}}></iframe>
 	</script>
 	
-	<script type = "text/x-handlebars" data-template-name="_alert">
-		{{view.content.message}}
-	</script>
-	
-	<!--
 	<script type = "text/x-handlebars" data-template-name="bookmarks">
 		<h1>Listing bookmarks</h1>
 		
@@ -98,8 +106,13 @@
 				<td>{{#linkTo "bookmark" bookmark}}{{bookmark.name}}{{/linkTo}}</td>
 				<td>{{bookmark.url}}</td>
 			</tr>
+			{{else}}
+				<tr>
+				<td>--</td>
+				<td>--</td>
+			</tr>
+			{{/each}}
 		</table>
 	</script>
-	-->
 </body>
 </html>
