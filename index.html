@@ -11,21 +11,29 @@
 	<script>
 		window.App = Ember.Application.create();
 		
+		var globalCounter = 0;
+		
 		var Bookmark = Ember.Object.extend({
 			to_link: function() {
 				return "<a href='" + this.get("url") + "'>" + this.get("name") + "</a>";
-			},
+			}
 			
-			formatted: function() {
+			, formatted: function() {
 				return this.get("name") + " - " + this.get("url");
-			},
+			}
 
-			link: function() {
+			, link: function() {
 				return this.to_link();
 			}.property("name", "url")
+			
+			, updateCounter: function() {
+				globalCounter += 1;
+				console.log("Global counter has increased to " + globalCounter);
+			}.observes("name")
 		});
 		
 		var bookmark = Bookmark.createWithMixins({name: "Tuts+ Premium", url: "http://tutsplus.com"});
+		bookmark.addObserver("url", function() {});
 	</script>
 </head>
 
