@@ -1,7 +1,9 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<meta charset="utf-8">
+	
 	<title>Let's learn Ember.js</title>
 	
 	<script src="jquery.js"></script>
@@ -11,36 +13,49 @@
 	<script>
 		window.App = Ember.Application.create();
 		
-		var globalCounter = 0;
-		
-		var Bookmark = Ember.Object.extend({
-			to_link: function() {
-				return "<a href='" + this.get("url") + "'>" + this.get("name") + "</a>";
-			}
-			
-			, formatted: function() {
-				return this.get("name") + " - " + this.get("url");
-			}
-
-			, link: function() {
-				return this.to_link();
-			}.property("name", "url")
-			
-			, updateCounter: function() {
-				globalCounter += 1;
-				console.log("Global counter has increased to " + globalCounter);
-			}.observes("name")
+		App.Router.map(function() {
+			this.resource("about", function() {
+				this.route("team");
+			})
+			this.route("contact");
 		});
-		
-		var bookmark = Bookmark.createWithMixins({name: "Tuts+ Premium", url: "http://tutsplus.com"});
-		bookmark.addObserver("url", function() {});
 	</script>
 </head>
 
 <body>
+
+	<script type="text/x-handlebars" data-template-name="application">
+		<nav>
+			<ul>
+				<li>{{#linkTo "index"}}Home{{/linkTo}}</li>
+				<li>{{#linkTo "about"}}About{{/linkTo}}</li>
+					<ul>
+						<li>{{#linkTo "about.team"}}Team{{/linkTo}}</li>
+					</ul>
+				<li>{{#linkTo "contact"}}Contact{{/linkTo}}</li>
+			</ul>
+		</nav>
+		
+		{{outlet}}
+	</script>
+	
+
+
 	<script type = "text/x-handlebars" data-template-name="index">
 		<h1>Welcome to Ember.js!</h1>
 	</script>
+	
+	<script type = "text/x-handlebars" data-template-name="about">
+		<h1>About Page</h1>
+		{{outlet}}
+	</script>
+	
+	<script type = "text/x-handlebars" data-template-name="contact">
+		<h1>Please contact us!</h1>
+	</script>
+	
+	<script type = "text/x-handlebars" data-template-name="about/team">
+		<h2>Here's our team!</h2>
+	</script>
 </body>
-
 </html>
