@@ -33,19 +33,42 @@
 
 <body>
 	<script type = "text/x-handlebars" data-template-name="bookmarks">
-		<h2>All my Bookmarks</h2>
+		<h2>You have {{controller.length}} Bookmarks</h2>
 		
 		<table class = "twelve">
 			<thead>
 				<tr>
-					<th>Title</th>
-					<th>URL</th>
+					<th><a {{action pushSort 'title'}}>Tittle</a></th>
+					<th><a {{action pushSort 'url'}}>URL</a></th>
+					<th><a {{action pushSort 'favorite'}}>Favorite?</a></th>
 				</tr>
 			</thead>
-			{{#each bookmark in controller}}
+			{{#each controller.favorites}}
 			<tr>
-				<td>{{bookmark.title}}</td>
-				<td>{{bookmark.url}}</td>
+				<td>{{title}}</td>
+				<td>{{url}}</td>
+				<td>{{view Ember.Checkbox checkedBinding="favorite"}}</td>
+			</tr>
+			{{else}}
+				<tr>
+				<td>You have no bookmarks.</td>
+			</tr>
+			{{/each}}
+		</table>
+
+		<table class = "twelve">
+			<thead>
+				<tr>
+					<th><a {{action pushSort 'title'}}>Tittle</a></th>
+					<th><a {{action pushSort 'url'}}>URL</a></th>
+					<th><a {{action pushSort 'favorite'}}>Favorite?</a></th>
+				</tr>
+			</thead>
+			{{#each controller.regular}}
+			<tr>
+				<td>{{title}}</td>
+				<td>{{url}}</td>
+				<td>{{view Ember.Checkbox checkedBinding="favorite"}}</td>
 			</tr>
 			{{else}}
 				<tr>
